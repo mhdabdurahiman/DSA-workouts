@@ -20,6 +20,21 @@ class Graph {
         this.adjascencyList[vertex2].add(vertex1)
     }
 
+    removeEdge(vertex1, vertex2) {
+        this.adjascencyList[vertex1].delete(vertex2)
+        this.adjascencyList[vertex2].delete(vertex1)
+    }
+
+    removeVertex(vertex) {
+        if(!this.adjascencyList[vertex]) {
+            return
+        }
+        for(let adjascentVertex of this.adjascencyList[vertex]) {
+            this.removeEdge(vertex, adjascentVertex)
+        }
+        delete this.adjascencyList[vertex]
+    }
+
     hasEdge(vertex1, vertex2) {
         return (
             this.adjascencyList[vertex1].has(vertex2) &&
@@ -44,3 +59,5 @@ graph.addEdge("B", "C")
 
 graph.display()
 console.log(graph.hasEdge("A", "B"))
+graph.removeVertex("B")
+graph.display()
